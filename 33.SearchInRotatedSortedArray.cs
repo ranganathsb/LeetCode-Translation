@@ -1,8 +1,28 @@
 Code Definition:
-
+public class Solution {
+    public int Search(int[] A, int target) {
+        
+    }
+}
 
 Driver Code:
-
+class __Driver__ {
+  static void Main(string[] args) {
+  using (StreamWriter file = new StreamWriter("user.out")) {
+    file.AutoFlush = true;
+    string line;
+    while ((line = Console.ReadLine()) != null) {
+      string[] input = line.Split(new char[]{' '}, StringSplitOptions.RemoveEmptyEntries);
+      int target = int.Parse(input[input.Length-1]);
+      int[] A = input.Skip(1)
+                       .Select(y => int.Parse(y))
+                       .ToArray();
+      Array.Resize(ref A, A.Length-1);
+      file.WriteLine(__Serializer__.serialize(new Solution().Search(A, target)));
+    }
+  }
+  }
+}
 
 ac Solution Code:
 public class Solution {
