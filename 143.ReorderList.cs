@@ -79,3 +79,23 @@ public class Solution {
 		}
 }
 
+
+tle Solution Code:
+public class Solution {
+    // O(N^2) solution, should TLE.
+    // Translated from Java tle solution
+    public void ReorderList(ListNode head) {
+       if(head==null || head.next==null || head.next.next==null) return;
+       ListNode pre=null;
+       ListNode curr=head;
+       while(curr.next!=null)
+       {
+           pre=curr;
+           curr=curr.next;
+       }
+       pre.next=null;
+       curr.next=head.next;
+       head.next=curr;
+       ReorderList(curr.next);
+    }
+}
