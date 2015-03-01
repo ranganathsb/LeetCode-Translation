@@ -1,14 +1,14 @@
 Code Definition:
 /**
  * Definition for undirected graph.
- * class UndirectedGraphNode {
- *     int label;
- *     List<UndirectedGraphNode> neighbors;
- *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * public class UndirectedGraphNode {
+ *     public int label;
+ *     public IList<UndirectedGraphNode> neighbors;
+ *     public UndirectedGraphNode(int x) { label = x; neighbors = new List<UndirectedGraphNode>(); }
  * };
  */
 public class Solution {
-    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+    public UndirectedGraphNode CloneGraph(UndirectedGraphNode node) {
         
     }
 }
@@ -43,13 +43,13 @@ class __Driver__ {
         while (head < que.Count) {
             UndirectedGraphNode now = que[head];
             if (hash.Contains(now)) return now;
-            for (UndirectedGraphNode neighbor : now.neighbors)
+            foreach (UndirectedGraphNode neighbor in now.neighbors)
             {
                 if (hashB.Add(neighbor)) {
                     que.Add(neighbor);
                 }
             }
-            head++
+            head++;
         }
         return null;
     }
@@ -59,7 +59,7 @@ class __Driver__ {
     file.AutoFlush = true;
     string line;
     while ((line = Console.ReadLine()) != null) {
-        UndirectedGraphNode node = UndirectedGraphNode.deserialize(s);
+        UndirectedGraphNode node = __UndirectedGraphNodeUtils__.deserialize(line);
         UndirectedGraphNode copied = new Solution().CloneGraph(node);
         UndirectedGraphNode same = IsCopied(node, copied);
             if (same == null) {
@@ -74,3 +74,49 @@ class __Driver__ {
 
 
 ac Solution Code:
+
+//BFS Iterative Solution
+public class Solution {
+    public UndirectedGraphNode CloneGraph(UndirectedGraphNode node) {
+        if(node==null) return null;
+        Dictionary<UndirectedGraphNode,UndirectedGraphNode> dic = new Dictionary<UndirectedGraphNode,UndirectedGraphNode>();
+        return DFS(node,dic);
+    }
+    
+    private UndirectedGraphNode DFS(UndirectedGraphNode node, Dictionary<UndirectedGraphNode,UndirectedGraphNode> dic){
+        if(dic.ContainsKey(node))
+            return dic[node];
+        UndirectedGraphNode copyNode = new UndirectedGraphNode(node.label);
+        dic.Add(node,copyNode);
+        foreach(UndirectedGraphNode neighbor in node.neighbors){
+            copyNode.neighbors.Add(DFS(neighbor,dic));
+        }
+        return copyNode;
+    }
+}
+
+//DFS Recursive Solution
+public class Solution {
+    public UndirectedGraphNode CloneGraph(UndirectedGraphNode node) {
+        if (node == null)
+				return null;
+			Dictionary<UndirectedGraphNode, UndirectedGraphNode> dic = new Dictionary<UndirectedGraphNode, UndirectedGraphNode>();			
+			Queue<UndirectedGraphNode> q = new Queue<UndirectedGraphNode>();
+			UndirectedGraphNode newNode = new UndirectedGraphNode (node.label);
+			q.Enqueue(node);
+			dic.Add(node, newNode);
+			while (q.Count != 0) {
+				UndirectedGraphNode currNode = q.Dequeue();
+				foreach (UndirectedGraphNode neighbor in currNode.neighbors) {
+					if (!dic.ContainsKey (neighbor)) {
+						q.Enqueue(neighbor);
+						UndirectedGraphNode copyNeighbor = new UndirectedGraphNode (neighbor.label);
+						dic[currNode].neighbors.Add(copyNeighbor);
+						dic.Add(neighbor, copyNeighbor);
+					} else
+						dic[currNode].neighbors.Add (dic[neighbor]);
+				}
+			}
+			return newNode;
+    }
+}
