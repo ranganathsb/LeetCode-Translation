@@ -75,7 +75,7 @@ class __Driver__ {
 
 ac Solution Code:
 
-//BFS Iterative Solution
+//DFS Recursive Solution
 public class Solution {
     public UndirectedGraphNode CloneGraph(UndirectedGraphNode node) {
         if(node==null) return null;
@@ -95,10 +95,10 @@ public class Solution {
     }
 }
 
-//DFS Recursive Solution
-public class Solution {
-    public UndirectedGraphNode CloneGraph(UndirectedGraphNode node) {
-        if (node == null)
+	//BFS Iterative Solution
+	public class Solution {
+    		public UndirectedGraphNode CloneGraph(UndirectedGraphNode node) {
+        		if (node == null)
 				return null;
 			Dictionary<UndirectedGraphNode, UndirectedGraphNode> dic = new Dictionary<UndirectedGraphNode, UndirectedGraphNode>();			
 			Queue<UndirectedGraphNode> q = new Queue<UndirectedGraphNode>();
