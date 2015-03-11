@@ -15,9 +15,9 @@ class __Driver__ {
       string[] input = line.Split(new char[]{' '}, StringSplitOptions.RemoveEmptyEntries);
       int target = int.Parse(input[input.Length-1]);
       int[] A = input.Skip(1)
-                       .Select(y => int.Parse(y))
-                       .ToArray();
-      Array.Resize(ref A, A.Length-1);
+                   .Take(input.Length - 2) //specify how many elements in the array to extract
+                   .Select(y => int.Parse(y))
+                   .ToArray();
       file.WriteLine(__Serializer__.serialize(new Solution().Search(A, target)));
     }
   }
